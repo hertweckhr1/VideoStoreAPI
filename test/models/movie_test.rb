@@ -10,6 +10,30 @@ describe Movie do
       expect(movie).must_be :valid?
     end
 
+    it "requires a title" do
+      movie.title = nil
+      movie.valid?.must_equal false
+      movie.errors.messages.must_include :title
+    end
+
+    it "requires a overview" do
+      movie.overview = nil
+      movie.valid?.must_equal false
+      movie.errors.messages.must_include :overview
+    end
+
+    it "requires a release_date" do
+      movie.release_date = nil
+      movie.valid?.must_equal false
+      movie.errors.messages.must_include :release_date
+    end
+
+    it "requires a inventory" do
+      movie.inventory = nil
+      movie.valid?.must_equal false
+      movie.errors.messages.must_include :inventory
+    end
+
   end
 
   describe "Relationships" do

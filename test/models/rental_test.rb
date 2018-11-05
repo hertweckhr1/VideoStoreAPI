@@ -35,6 +35,18 @@ describe Rental do
       expect(rental.errors.messages).must_include :movie
     end
 
+    it "requires a checkout_date" do
+      rental.checkout_date = nil
+      rental.valid?.must_equal false
+      rental.errors.messages.must_include :checkout_date
+    end
+
+    it "requires a due_date" do
+      rental.due_date = nil
+      rental.valid?.must_equal false
+      rental.errors.messages.must_include :due_date
+    end
+
   end
 
   describe "Relationships" do
