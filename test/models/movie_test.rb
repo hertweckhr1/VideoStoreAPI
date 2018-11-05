@@ -1,5 +1,7 @@
 require "test_helper"
 
+# You should have at least one positive and one negative test case for each relation, validation, and custom function you add to your models.
+
 describe Movie do
   let(:movie) { movies(:movieone) }
 
@@ -7,6 +9,7 @@ describe Movie do
     it "is valid when all fields are present" do
       expect(movie).must_be :valid?
     end
+
   end
 
   describe "Relationships" do

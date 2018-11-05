@@ -1,5 +1,7 @@
 require "test_helper"
 
+# You should have at least one positive and one negative test case for each relation, validation, and custom function you add to your models.
+
 describe Customer do
   let(:customer) { customers(:customerone) }
 

@@ -1,10 +1,12 @@
 require "test_helper"
 
+# You should have at least one positive and one negative test case for each relation, validation, and custom function you add to your models.
+
 describe Rental do
   let(:rental) { rentals(:rentalone) }
   let(:customertwo) { customers(:customertwo) }
   let(:movietwo) { movies(:movietwo) }
-  
+
   describe "Validations" do
     it "won't be valid without customer_id or movie_id" do
       rental = Rental.new
@@ -40,12 +42,12 @@ describe Rental do
       expect(rental.customer).must_equal customers(:customerone)
     end
 
-    it "can set the user through .customer" do
+    it "can set the rental through .customer" do
       rental.customer = customertwo
       expect(rental.customer_id).must_equal customertwo.id
     end
 
-    it "can set the user through .customer_id" do
+    it "can set the rental through .customer_id" do
       rental.customer_id = customertwo.id
       expect(rental.customer).must_equal customertwo
     end
@@ -54,12 +56,12 @@ describe Rental do
       expect(rental.movie).must_equal movies(:movieone)
     end
 
-    it "can set the work through .movie" do
+    it "can set the rental through .movie" do
       rental.movie = movietwo
       expect(rental.movie_id).must_equal movietwo.id
     end
 
-    it "can set the work through .movie_id" do
+    it "can set the rental through .movie_id" do
       rental.movie_id = movietwo.id
       expect(rental.movie).must_equal movietwo
     end
