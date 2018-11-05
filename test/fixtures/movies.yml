@@ -1,12 +1,12 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+movieone:
   title: MyString
   overview: MyString
   release_date: 2018-11-05
   inventory: 1
 
-two:
+movietwo:
   title: MyString
   overview: MyString
   release_date: 2018-11-05
