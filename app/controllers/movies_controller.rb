@@ -1,10 +1,10 @@
 class MoviesController < ApplicationController
-  protect_from_forgery with: :null_session
+
 
   def index
     @movies = Movie.all
 
-    render json: @movies
+    render json: @movies.as_json(only: [:id, :title, :release_date])
   end
 
   def show
@@ -13,7 +13,7 @@ class MoviesController < ApplicationController
     if @movie.nil?
       render json: { ok: false, message: 'not found' }, status: :not_found
     else
-      render json: @movie(except: [:created_at, :updated_at]), status: :ok
+      render json: @movie.as_json(except: [:created_at, :updated_at]), status: :ok
     end
   end
 
@@ -22,13 +22,13 @@ class MoviesController < ApplicationController
 
     if @movie.save
       render json: { ok: true,
-      movie = @movie.as_json(except: [:created_at, :updated_at])}
+      movie: @movie.as_json(except: [:created_at, :updated_at])}
     else
       render json: {
         ok: false,
         message: @movie.errors.messages
       }, status: :bad_request
-    end 
+    end
 
   end
 
