@@ -26,22 +26,31 @@ class MoviesController < ApplicationController
 
   def check_out
     @movie = Movie.find_by(id: params[:movie_id])
-      if @movie.nil?
-        return render "movies/notfound.json", status: :not_found
-      end
+    if @movie.nil?
+      return render "movies/notfound.json", status: :not_found
+    end
+
     @customer = Customer.find_by(id: params[:customer_id])
-      if @customer.nil?
-        return render "movies/notfound.json", status: :not_found
-      end
-    if @movie.available? == true && @customer.overdue? == false
+    if @customer.nil?
+      return render "movies/notfound.json", status: :not_found
+    end
+
+    if @movie.available? == true && @customer.overdue_items? == false
       @rental = Rental.new(customer: @customer, movie: @movie,
         checkout_date: Date.current, due_date: Date.current + 7)
 
-      if @rental.save 
-        render "movies/checkout.json", status: :ok
+      if @rental.save
+        @movie.available_inventory -= 1
+        @movie.save
+        @customer.movies_checked_out_count += 1
+        @customer.save
+
+        render "rentals/checkout.json", status: :ok
       else
         render "rentals/errors.json", status: :bad_request
       end
+    else
+      render "rentals/denied.json", status: :forbidden
     end
   end
 

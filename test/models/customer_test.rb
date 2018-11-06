@@ -76,11 +76,11 @@ describe Customer do
   describe "Custom Methods" do
     describe "overdue_items?" do
       it "returns true if customer has overdue items" do
-         expect(customertwo.overdue_items).must_equal true
+         expect(customertwo.overdue_items?).must_equal true
       end
 
       it "returns false if customer has no overdue items" do
-        expect(customer.overdue_items).must_equal false
+        expect(customer.overdue_items?).must_equal false
       end
     end
   end

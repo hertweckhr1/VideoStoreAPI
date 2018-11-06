@@ -9,4 +9,15 @@ class Customer < ApplicationRecord
   validates :state, presence: true
   validates :postal_code, presence: true
   validates :phone, presence: true
+
+  def overdue_items?
+    overdue = self.rentals.select{ |rental| rental.checkin_date == nil &&
+      rental.due_date < Date.current }
+
+    if overdue.empty?
+      return false
+    else
+      return true
+    end
+  end
 end
