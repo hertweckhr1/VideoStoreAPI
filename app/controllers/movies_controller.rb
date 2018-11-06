@@ -55,6 +55,29 @@ class MoviesController < ApplicationController
   end
 
   def check_in
+    @movie = Movie.find_by(id: params[:movie_id])
+    if @movie.nil?
+      return render "movies/notfound.json", status: :not_found
+    end
+
+    @customer = Customer.find_by(id: params[:customer_id])
+    if @customer.nil?
+      return render "movies/notfound.json", status: :not_found
+    end
+
+    @rental = Rental.where(customer_id: @customer.id, movie_id: @movie.id).order(checkout_date: :asc).first
+    if @rental.nil?
+      return render "movies/notfound.json", status: :not_found
+    else
+      @rental.checkin_date = DateTime.current
+      @rental.save
+      @movie.available_inventory += 1
+      @movie.save
+
+      render "rentals/checkout.json", status: :ok
+    end
+
+
   end
 
   private

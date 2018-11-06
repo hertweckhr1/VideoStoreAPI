@@ -1,6 +1,6 @@
 object @rental
 
-attributes :checkout_date, :due_date
+attributes :checkout_date, :due_date, :checkin_date
 
 child :movie do
   attributes :title

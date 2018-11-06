@@ -190,8 +190,12 @@ describe MoviesController do
       starting_inventory = movie.available_inventory
 
       expect {
-        post check_in_path, params: {customer: customer, movie: movie}
+        post check_in_path, params: {customer_id: customer.id, movie_id: movie.id}
       }.wont_change "Rental.count"
+
+      body = JSON.parse(response.body)
+      expect(body).must_be_kind_of Hash
+      expect(body).must_include "checkout_date"
 
       movie = Movie.find_by(id: movie.id)
       rental = Rental.find_by(id: rental.id)
@@ -205,8 +209,15 @@ describe MoviesController do
       starting_inventory = movie.available_inventory
 
       expect {
-        post check_in_path, params: {customer: "jane", movie: movie}
+        post check_in_path, params: {customer_id: -1, movie_id: movie.id}
       }.wont_change "Rental.count"
+
+      body = JSON.parse(response.body)
+
+      expect(body).must_be_kind_of Hash
+      expect(body).must_include "message"
+      expect(body["message"]).must_include "not found"
+      must_respond_with :not_found
 
       movie = Movie.find_by(id: movie.id)
       expect(movie.available_inventory).must_equal starting_inventory
@@ -217,8 +228,15 @@ describe MoviesController do
       starting_inventory = movie.available_inventory
 
       expect {
-        post check_in_path, params: {movie: movie}
+        post check_in_path, params: {movie_id: movie.id}
       }.wont_change "Rental.count"
+
+      body = JSON.parse(response.body)
+
+      expect(body).must_be_kind_of Hash
+      expect(body).must_include "message"
+      expect(body["message"]).must_include "not found"
+      must_respond_with :not_found
 
       movie = Movie.find_by(id: movie.id)
       expect(movie.available_inventory).must_equal starting_inventory
