@@ -1,6 +1,5 @@
 class MoviesController < ApplicationController
 
-
   def index
     @movies = Movie.all
   end
@@ -17,7 +16,6 @@ class MoviesController < ApplicationController
 
   def create
     @movie = Movie.new(movie_params)
-
     if @movie.save
       render "movies/show.json", status: :ok
     else
