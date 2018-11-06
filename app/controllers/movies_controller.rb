@@ -7,6 +7,12 @@ class MoviesController < ApplicationController
 
   def show
     @movie = Movie.find_by(id: params[:id])
+    
+    if @movie.nil?
+      render "movies/notfound.json", status: :not_found
+    else
+      render "movies/show.json", status: :ok
+    end
   end
 
   def create
