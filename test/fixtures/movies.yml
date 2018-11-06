@@ -1,13 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 movieone:
-  title: MyString
-  overview: MyString
-  release_date: 2018-11-05
-  inventory: 1
+  title: Titanic
+  overview: Epic Romance
+  release_date: 2010-11-05
+  inventory: 10
+  available_inventory: 10
 
 movietwo:
-  title: MyString
-  overview: MyString
-  release_date: 2018-11-05
+  title: Casper
+  overview: The friendliest ghost you know.
+  release_date: 1997-08-05
   inventory: 1
+  available_inventory: 1

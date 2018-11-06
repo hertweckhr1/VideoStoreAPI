@@ -1,19 +1,21 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 customerone:
-  name: MyString
+  name: Tina
   registered_at: 2018-11-05 12:37:55
-  address: MyString
-  city: MyString
-  state: MyString
-  postal_code: MyString
-  phone: MyString
+  address: 12 Elm St
+  city: Los Angeles
+  state: CA
+  postal_code: 91007
+  phone: (206)124-2343
+  movies_checked_out_count: 1
 
 customertwo:
-  name: MyString
+  name: Juanita
   registered_at: 2018-11-05 12:37:55
-  address: MyString
-  city: MyString
-  state: MyString
-  postal_code: MyString
-  phone: MyString
+  address: 2 Bernard Ave
+  city: Rochester
+  state: NY
+  postal_code: 14616
+  phone: (585)845-2387
+  movies_checked_out_count: 1

@@ -4,6 +4,7 @@ require "test_helper"
 
 describe Customer do
   let(:customer) { customers(:customerone) }
+  let(:customertwo) { customers(:customertwo) }
 
   describe "Validations" do
     it "is valid when all fields are present" do
@@ -72,6 +73,15 @@ describe Customer do
     end
   end
 
-  describe "Custom Models" do
+  describe "Custom Methods" do
+    describe "overdue_items?" do
+      it "returns true if customer has overdue items" do
+         expect(customertwo.overdue_items).must_equal true
+      end
+
+      it "returns false if customer has no overdue items" do
+        expect(customer.overdue_items).must_equal false
+      end
+    end
   end
 end

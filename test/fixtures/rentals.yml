@@ -1,13 +1,22 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 rentalone:
-  checkout_date: 2018-11-05
-  due_date: 2018-11-05
+  checkout_date: 2018-11-04
+  due_date: 2018-11-10
   movie: movieone
   customer: customerone
+  checkin_date: nil
 
 rentaltwo:
-  checkout_date: 2018-11-05
-  due_date: 2018-11-05
+  checkout_date: 2018-10-05
+  due_date: 2018-10-12
   movie: movietwo
   customer: customertwo
+  checkin_date: 2018-10-07
+
+rentalthree:
+  checkout_date: 2018-10-05
+  due_date: 2018-10-12
+  movie: movietwo
+  customer: customertwo
+  checkin_date: nil

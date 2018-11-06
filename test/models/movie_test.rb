@@ -55,6 +55,16 @@ describe Movie do
     end
   end
 
-  describe "Custom Models" do
+  describe "Custom Methods" do
+    describe "available?" do
+      it "returns true if available inventory is greater than 0" do
+        expect(movie.available?).must_equal true
+      end
+
+      it "returns false if available inventory is 0" do
+        movie.available_inventory = 0
+        expect(movie.available?).must_equal false
+      end
+    end
   end
 end
