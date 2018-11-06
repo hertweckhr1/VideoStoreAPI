@@ -4,7 +4,7 @@ class MoviesController < ApplicationController
   def index
     @movies = Movie.all
 
-    render json: @movies.as_json(only: [:id, :title, :release_date])
+    # render json: @movies.as_json(only: [:id, :title, :release_date])
   end
 
   def show
@@ -13,7 +13,7 @@ class MoviesController < ApplicationController
     if @movie.nil?
       render json: { ok: false, message: 'not found' }, status: :not_found
     else
-      render json: @movie.as_json(except: [:created_at, :updated_at]), status: :ok
+      render :show
     end
   end
 
