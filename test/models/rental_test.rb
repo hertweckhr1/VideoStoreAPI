@@ -78,7 +78,36 @@ describe Rental do
       expect(rental.movie).must_equal movietwo
     end
   end
+  let(:rental) { rentals(:rentalone) }
+  let(:customertwo) { customers(:customertwo) }
+  let(:movietwo) { movies(:movietwo) }
 
-  describe "Custom Models" do
+  describe "Custom Methods" do
+    describe "check_out_transaction" do
+      it "checks out a rental successfully" do
+        num_checked_out = customertwo.movies_checked_out_count
+        avail_inventory = movietwo.available_inventory
+
+        rental = Rental.new(customer_id: customertwo.id, movie_id: movietwo.id, checkout_date: Date.current, due_date: Date.current + 7)
+
+        rental.check_out_transaction(customertwo, movietwo)
+
+        expect(customertwo.movies_checked_out_count).must_equal num_checked_out + 1
+        expect(movietwo.available_inventory).must_equal avail_inventory - 1
+      end
+    end
+
+    describe "check_in_transaction" do
+      it "checks in a rental successfully" do
+        num_checked_out = customertwo.movies_checked_out_count
+        avail_inventory = movietwo.available_inventory
+
+        rental.check_in_transaction(customertwo, movietwo)
+
+        expect(rental.checkin_date).wont_be_nil
+        expect(customertwo.movies_checked_out_count).must_equal num_checked_out - 1
+        expect(movietwo.available_inventory).must_equal avail_inventory + 1
+      end
+    end
   end
 end

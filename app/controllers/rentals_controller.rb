@@ -22,7 +22,7 @@ class RentalsController < ApplicationController
   end
 
   def checkin
-    @rental = Rental.where(customer_id: @customer.id, movie_id: @movie.id).order(checkout_date: :asc).first
+    @rental = Rental.where(customer_id: @customer.id, movie_id: @movie.id).where(checkin_date: nil).order(checkout_date: :asc).first
 
     if @rental.nil?
       return render "layouts/notfound.json", status: :not_found
