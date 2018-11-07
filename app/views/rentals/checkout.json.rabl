@@ -7,5 +7,5 @@ child :movie do
 end
 
 child :customer do
-  attributes :name
+  attributes :name, :movies_checked_out_count
 end

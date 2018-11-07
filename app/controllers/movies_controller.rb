@@ -24,7 +24,7 @@ class MoviesController < ApplicationController
 
   end
 
-  def check_out
+  def checkout
     @movie = Movie.find_by(id: params[:movie_id])
     if @movie.nil?
       return render "movies/notfound.json", status: :not_found
@@ -54,7 +54,7 @@ class MoviesController < ApplicationController
     end
   end
 
-  def check_in
+  def checkin
     @movie = Movie.find_by(id: params[:movie_id])
     if @movie.nil?
       return render "movies/notfound.json", status: :not_found
@@ -73,6 +73,8 @@ class MoviesController < ApplicationController
       @rental.save
       @movie.available_inventory += 1
       @movie.save
+      @customer.movies_checked_out_count -= 1
+      @customer.save
 
       render "rentals/checkout.json", status: :ok
     end
