@@ -7,16 +7,16 @@ class MoviesController < ApplicationController
       if sort_options.include? params[:sort]
         @movies = Movie.all.order(params[:sort])
       else
-        return render "layouts/badrequest.json", status_code: :bad_request
+        return bad_request
       end
     end
 
     if params[:n]
-      return render "layouts/badrequest.json" if !integer?(params[:n].to_i)
+      return bad_request if !integer?(params[:n])
     end
 
     if params[:p]
-      return render "layouts/badrequest.json" if !integer?(params[:p].to_i)
+      return bad_request if !integer?(params[:p])
     end
 
     if params[:n] && params[:p]
@@ -107,13 +107,4 @@ class MoviesController < ApplicationController
   def movie_params
     params.permit(:title, :overview, :release_date, :inventory)
   end
-
-  def integer?(x)
-    if x.integer? && x > 0
-      return true
-    else
-      return false
-    end
-  end
-
 end
