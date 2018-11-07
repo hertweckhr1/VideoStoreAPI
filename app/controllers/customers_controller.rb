@@ -7,16 +7,16 @@ class CustomersController < ApplicationController
       if sort_options.include? params[:sort]
         @customers = Customer.all.order(params[:sort])
       else
-        return render "layouts/badrequest.json", status_code: :bad_request
+        return render "layouts/badrequest.json", status: :bad_request
       end
     end
 
     if params[:n]
-      return render "layouts/badrequest.json" if !integer?(params[:n].to_i)
+      return render "layouts/badrequest.json", status: :bad_request if !integer?(params[:n])
     end
 
     if params[:p]
-      return render "layouts/badrequest.json" if !integer?(params[:p].to_i)
+      return render "layouts/badrequest.json", status: :bad_request if !integer?(params[:p])
     end
 
     if params[:n] && params[:p]
@@ -28,11 +28,13 @@ class CustomersController < ApplicationController
 
   def customer_params
     params.require(:customer).permit(:name, :registered_at, :address, :city,
-      :state, :postal_code, :phone)
+      :state, :postal_code, :phone, :sort, :p, :n)
   end
 
   def integer?(x)
-    if x.integer? && x > 0
+    if x != x.to_i.to_s
+      return false
+    elsif x.to_i.integer? && x.to_i > 0
       return true
     else
       return false

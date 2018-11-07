@@ -38,5 +38,51 @@ describe CustomersController do
         expect(customer.keys.length).must_equal fields.length
       end
     end
+
+    it "successfully returns sorted array given a valid query parameter" do
+      get customers_path, params: {format: "json", sort: "name"}
+      body = JSON.parse(response.body)
+
+      expect(body[0]["name"]).must_be :<, body[-1]["name"]
+      must_respond_with :success
+    end
+
+    it "renders badrequest json if given an invalid sort query parameter" do
+      get customers_path, params: {format: "json", sort: "pina"}
+      body = JSON.parse(response.body)
+
+      expect(body).must_be_kind_of Hash
+      expect(body).must_include "message"
+      expect(body["message"]).must_include "bad request"
+      must_respond_with :bad_request
+    end
+
+    it "paginates accurately given valid query parameters" do
+      get customers_path, params: {format: "json", n: 10, p: 1 }
+      body = JSON.parse(response.body)
+
+      expect(body.length).must_equal 2
+      must_respond_with :success
+    end
+
+    it "renders bad request given invalid paginate query parameters" do
+      get customers_path, params: {format: "json", n: 10, p: 1.5 }
+
+      body = JSON.parse(response.body)
+
+      expect(body).must_be_kind_of Hash
+      expect(body).must_include "message"
+      expect(body["message"]).must_include "bad request"
+      must_respond_with :bad_request
+    end
+
+    it "sorts and paginates correctly given valid query parameters" do
+      get customers_path, params: {format: "json", sort: "name", n: 10, p: 1 }
+      body = JSON.parse(response.body)
+
+      expect(body.length).must_equal 2
+      expect(body[0]["name"]).must_be :<, body[-1]["name"]
+      must_respond_with :success
+    end
   end
 end
