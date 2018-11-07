@@ -70,11 +70,11 @@ class MoviesController < ApplicationController
       return render "layouts/notfound.json", status: :not_found
     else
       @rental.checkin_date = DateTime.current
-      @rental.save
       @movie.available_inventory += 1
       @movie.save
       @customer.movies_checked_out_count -= 1
       @customer.save
+      @rental.save
 
       render "rentals/checkout.json", status: :ok
     end

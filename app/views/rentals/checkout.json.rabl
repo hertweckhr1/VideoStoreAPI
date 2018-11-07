@@ -3,7 +3,7 @@ object @rental
 attributes :checkout_date, :due_date, :checkin_date
 
 child :movie do
-  attributes :title
+  attributes :title, :available_inventory
 end
 
 child :customer do
