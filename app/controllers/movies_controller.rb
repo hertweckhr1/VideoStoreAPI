@@ -8,7 +8,7 @@ class MoviesController < ApplicationController
     @movie = Movie.find_by(id: params[:id])
 
     if @movie.nil?
-      render "movies/notfound.json", status: :not_found
+      render "layouts/notfound.json", status: :not_found
     else
       render "movies/show.json", status: :ok
     end
@@ -27,12 +27,12 @@ class MoviesController < ApplicationController
   def checkout
     @movie = Movie.find_by(id: params[:movie_id])
     if @movie.nil?
-      return render "movies/notfound.json", status: :not_found
+      return render "layouts/notfound.json", status: :not_found
     end
 
     @customer = Customer.find_by(id: params[:customer_id])
     if @customer.nil?
-      return render "movies/notfound.json", status: :not_found
+      return render "layouts/notfound.json", status: :not_found
     end
 
     if @movie.available? == true && @customer.overdue_items? == false
@@ -57,17 +57,17 @@ class MoviesController < ApplicationController
   def checkin
     @movie = Movie.find_by(id: params[:movie_id])
     if @movie.nil?
-      return render "movies/notfound.json", status: :not_found
+      return render "layouts/notfound.json", status: :not_found
     end
 
     @customer = Customer.find_by(id: params[:customer_id])
     if @customer.nil?
-      return render "movies/notfound.json", status: :not_found
+      return render "layouts/notfound.json", status: :not_found
     end
 
     @rental = Rental.where(customer_id: @customer.id, movie_id: @movie.id).order(checkout_date: :asc).first
     if @rental.nil?
-      return render "movies/notfound.json", status: :not_found
+      return render "layouts/notfound.json", status: :not_found
     else
       @rental.checkin_date = DateTime.current
       @rental.save
