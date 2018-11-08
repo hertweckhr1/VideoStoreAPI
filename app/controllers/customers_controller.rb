@@ -6,6 +6,10 @@ class CustomersController < ApplicationController
     @customers = sort_and_paginate(sort_options, list, params)
   end
 
+  def zomg
+    render "customers/zomg.json.rabl", status: :ok
+  end
+
   private
 
   def customer_params

@@ -85,4 +85,13 @@ describe CustomersController do
       must_respond_with :success
     end
   end
+
+  describe "zomg" do
+    it "works" do
+      get zomg_path, as: :json
+
+      expect(response.header['Content-Type']).must_include 'json'
+      must_respond_with :success
+    end
+  end
 end
