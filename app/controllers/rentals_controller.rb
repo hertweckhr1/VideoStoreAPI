@@ -32,6 +32,10 @@ class RentalsController < ApplicationController
     end
   end
 
+  def overdue
+    @rentals = Rental.all.where(checkin_date: nil).where("due_date < ?", Date.current)
+  end
+
   private
 
   def rental_params

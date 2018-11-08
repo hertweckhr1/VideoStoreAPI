@@ -63,14 +63,6 @@ describe Customer do
       customer = Customer.new
       expect(customer.rentals.count).must_equal 0
     end
-
-    it "can access movies through rentals" do
-      expect(customer.movies.length).must_be :>=, 0
-
-      customer.movies.each do |movie|
-        expect(movie).must_be_instance_of Movie
-      end
-    end
   end
 
   describe "Custom Methods" do
