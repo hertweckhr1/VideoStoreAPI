@@ -15,4 +15,30 @@ class ApplicationController < ActionController::API
       return false
     end
   end
+
+  def sort_and_paginate(options, list, params)
+    if params[:sort]
+     if options.include? params[:sort]
+       list = list.all.order(params[:sort])
+     else
+       return bad_request
+     end
+    else
+     list = list.all.order(:id)
+    end
+
+    if params[:n]
+      return bad_request if !integer?(params[:n])
+    end
+
+    if params[:p]
+      return bad_request if !integer?(params[:p])
+    end
+
+    if params[:p] || params[:n]
+      list = list.paginate(:page => params[:p], :per_page => params[:n])
+    end
+
+    return list
+  end
 end

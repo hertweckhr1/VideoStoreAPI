@@ -1,27 +1,9 @@
 class MoviesController < ApplicationController
 
   def index
-    @movies = Movie.all.order(:id)
     sort_options = ["title", "release_date"]
-    if params[:sort]
-      if sort_options.include? params[:sort]
-        @movies = Movie.all.order(params[:sort])
-      else
-        return bad_request
-      end
-    end
-
-    if params[:n]
-      return bad_request if !integer?(params[:n])
-    end
-
-    if params[:p]
-      return bad_request if !integer?(params[:p])
-    end
-
-    if params[:n] && params[:p]
-        @movies = @movies.paginate(:page => params[:p], :per_page => params[:n])
-    end
+    list = Movie.all
+    @movies = sort_and_paginate(sort_options, list, params)
   end
 
   def show
