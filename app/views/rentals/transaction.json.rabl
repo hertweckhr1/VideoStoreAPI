@@ -1,5 +1,6 @@
 object @rental
 
+node(:ok) { true }
 attributes :checkout_date, :due_date, :checkin_date
 
 child :movie do

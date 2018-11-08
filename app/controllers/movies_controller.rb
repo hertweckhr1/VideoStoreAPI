@@ -7,9 +7,7 @@ class MoviesController < ApplicationController
     @movies = sort_and_paginate(sort_options, list, params)
   end
 
-  def show
-    render "movies/show.json", status: :ok
-  end
+  def show; end
 
   def create
     @movie = Movie.new(movie_params)
@@ -21,13 +19,9 @@ class MoviesController < ApplicationController
   end
 
   def current
-    @rentals = @movie.rentals.select {|rental| rental.checkin_date == nil}
-
-    if @rentals.empty?
-      render "layouts/empty.json", status: :ok
-    else
-      render "movies/currenthistory.json", status: :ok
-    end
+    sort_options = ["name", "postal_code"]
+    list = current_data(@movie)
+    @rentals = sort_and_paginate(sort_options, list, params)
   end
 
   def history

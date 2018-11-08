@@ -1,5 +1,18 @@
 class ApplicationController < ActionController::API
 
+  def current_data(entity)
+    list = entity.rentals.where(checkin_date: nil)
+
+    if list.empty?
+      render "layouts/empty.json", status: :ok
+    else
+      return list
+    end
+  end
+
+  def history_data
+  end
+
   private
 
   def bad_request
@@ -19,6 +32,7 @@ class ApplicationController < ActionController::API
   def sort_and_paginate(options, list, params)
     if params[:sort]
      if options.include? params[:sort]
+       binding.pry
        list = list.all.order(params[:sort])
      else
        return bad_request
