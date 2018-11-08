@@ -27,7 +27,7 @@ describe CustomersController do
     end
 
     it "returns customers with exactly the required fields" do
-      fields = %w(id movies_checked_out_count name phone postal_code registered_at)
+      fields = %w(id movies_checked_out_count name ok phone postal_code registered_at)
 
       get customers_path, as: :json
 

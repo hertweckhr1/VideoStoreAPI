@@ -31,7 +31,7 @@ describe MoviesController do
     end
 
     it "returns movies with exactly the required fields" do
-      fields = %w(id release_date title)
+      fields = %w(id ok release_date title)
 
       get movies_path, as: :json
 

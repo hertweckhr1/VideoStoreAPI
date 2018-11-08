@@ -32,7 +32,7 @@ class ApplicationController < ActionController::API
   def sort_and_paginate(options, list, params)
     if params[:sort]
      if options.include? params[:sort]
-       binding.pry
+       # binding.pry
        list = list.all.order(params[:sort])
      else
        return bad_request
