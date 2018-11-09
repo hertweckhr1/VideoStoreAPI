@@ -29,7 +29,7 @@ class MoviesController < ApplicationController
   end
 
   def history
-    @rentals = history_data(@customer)
+    @rentals = history_data(@movie)
 
     if @rentals.empty?
       return render "layouts/empty.json", status: :ok
