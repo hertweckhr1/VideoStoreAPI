@@ -132,4 +132,41 @@ describe RentalsController do
       expect(movie.available_inventory).must_equal starting_inventory
     end
   end
+
+  describe "overdue" do
+    it "is a real working route and returns JSON" do
+      get overdue_path, as: :json
+
+      expect(response.header['Content-Type']).must_include 'json'
+      must_respond_with :success
+    end
+
+    it "will return all overdue items that have not been checked in" do
+      get overdue_path, as: :json
+
+      body = JSON.parse(response.body)
+      expect(body).must_be_kind_of Array
+      expect(body.length).must_equal 1
+
+      expect(body[0]).must_include "movie_id"
+
+      must_respond_with :success
+    end
+
+    it "will render layouts/empty when there are no overdue items" do
+      rentals(:rentalone).checkin_date = "2018-11-08"
+      rentals(:rentalone).save
+      rentals(:rentalthree).checkin_date = "2018-10-10"
+      rentals(:rentalthree).save
+
+      get overdue_path, as: :json
+      # binding.pry
+      body = JSON.parse(response.body)
+
+      expect(body).must_be_kind_of Hash
+      expect(body).must_include "message"
+      expect(body["message"]).must_include "no records found"
+      must_respond_with :ok
+    end
+  end
 end

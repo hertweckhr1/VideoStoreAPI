@@ -35,7 +35,11 @@ class RentalsController < ApplicationController
   def overdue
     sort_options = ["movie_id", "title", "customer_id", "name", "postal_code", "checkout_date", "due_date"]
 
-    @rentals = Rental.all.where(checkin_date: nil).where("due_date > ?", Date.current)
+    @rentals = Rental.all.where(checkin_date: nil).where("due_date < ?", Date.current)
+
+    if @rentals.empty?
+      return render "layouts/empty.json", status: :ok
+    end
 
     @details = []
     @rentals.each do |rental|
