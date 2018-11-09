@@ -94,4 +94,62 @@ describe CustomersController do
       must_respond_with :success
     end
   end
+
+  describe "current" do
+    it "is a working route and returns json" do
+      get customers_current_path(customer.id), as: :json
+
+      expect(response.header['Content-Type']).must_include 'json'
+      must_respond_with :success
+    end
+
+    it "returns an array" do
+      get customers_current_path(customer.id), as: :json
+
+      body = JSON.parse(response.body)
+
+      expect(body).must_be_kind_of Array
+    end
+
+    it "returns an empty message if no results are found" do
+      Rental.destroy_all
+
+      get customers_current_path(customer.id), as: :json
+      body = JSON.parse(response.body)
+
+      expect(body).must_be_kind_of Hash
+      expect(body).must_include "message"
+      expect(body["message"]).must_include "no records found"
+      must_respond_with :success
+    end
+  end
+
+  describe "history" do
+    it "is a working route and returns json" do
+      get customers_history_path(customer.id), as: :json
+
+      expect(response.header['Content-Type']).must_include 'json'
+      must_respond_with :success
+    end
+
+    it "returns an array" do
+      get customers_history_path(customer.id), as: :json
+
+      body = JSON.parse(response.body)
+
+      expect(body).must_be_kind_of Array
+    end
+
+    it "returns an empty message if no results are found" do
+      Rental.destroy_all
+
+      get customers_history_path(customer.id), as: :json
+      body = JSON.parse(response.body)
+
+      expect(body).must_be_kind_of Hash
+      expect(body).must_include "message"
+      expect(body["message"]).must_include "no records found"
+      must_respond_with :success
+    end
+  end
 end
