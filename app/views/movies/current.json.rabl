@@ -1,8 +1,5 @@
-collection @rentals
+collection @details
 
-node(:ok) { true }
-attributes :checkout_date, :due_date
-
-child :customer do
-  attributes :id, :name, :postal_code
+node do |attribute|
+  attribute
 end

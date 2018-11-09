@@ -12,23 +12,23 @@ class CustomersController < ApplicationController
   end
 
   def current
-    @rentals = @customer.rentals.select {|rental| rental.checkin_date == nil}
+    @rentals = current_data(@customer)
 
     if @rentals.empty?
-      render "layouts/empty.json", status: :ok
-    else
-      render "customers/currenthistory.json", status: :ok
+      return render "layouts/empty.json", status: :ok
     end
+
+    @details = multi_table_customer(@rentals)
   end
 
   def history
-    @rentals = @customer.rentals.select {|rental| rental.checkout_date < Date.current}
+    @rentals = history_data(@customer)
 
     if @rentals.empty?
-      render "layouts/empty.json", status: :ok
-    else
-      render "customers/currenthistory.json", status: :ok
+      return render "layouts/empty.json", status: :ok
     end
+
+    @details = multi_table_customer(@rentals)
   end
 
   private

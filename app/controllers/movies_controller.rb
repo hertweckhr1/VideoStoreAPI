@@ -19,19 +19,23 @@ class MoviesController < ApplicationController
   end
 
   def current
-    sort_options = ["name", "postal_code"]
-    list = current_data(@movie)
-    @rentals = sort_and_paginate(sort_options, list, params)
+    @rentals = current_data(@movie)
+
+    if @rentals.empty?
+      return render "layouts/empty.json", status: :ok
+    end
+
+    @details = multi_table_movie_details(@rentals)
   end
 
   def history
-    @rentals = @movie.rentals.select {|rental| rental.checkout_date < Date.current}
+    @rentals = history_data(@customer)
 
     if @rentals.empty?
-      render "layouts/empty.json", status: :ok
-    else
-      render "movies/currenthistory.json", status: :ok
+      return render "layouts/empty.json", status: :ok
     end
+
+    @details = multi_table_movie_details(@rentals)
   end
 
   private
