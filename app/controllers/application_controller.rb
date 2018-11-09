@@ -1,17 +1,5 @@
 class ApplicationController < ActionController::API
 
-  def current_data(entity)
-    list = entity.rentals.where(checkin_date: nil)
-
-    return list
-  end
-
-  def history_data(entity)
-    list = entity.rentals.select {|rental| rental.checkout_date < Date.current}
-
-    return list
-  end
-
   private
 
   def bad_request
@@ -54,6 +42,18 @@ class ApplicationController < ActionController::API
     if params[:p] || params[:n]
       list = list.paginate(:page => params[:p], :per_page => params[:n])
     end
+
+    return list
+  end
+
+  def current_data(entity)
+    list = entity.rentals.where(checkin_date: nil)
+
+    return list
+  end
+
+  def history_data(entity)
+    list = entity.rentals.select {|rental| rental.checkout_date < Date.current}
 
     return list
   end
