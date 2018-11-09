@@ -1,6 +1,6 @@
 class RentalsController < ApplicationController
-  before_action :find_movie
-  before_action :find_customer
+  before_action :find_movie, except: [:overdue]
+  before_action :find_customer, except: [:overdue]
 
   def checkout
     if @movie.available? && !@customer.overdue_items?
@@ -33,7 +33,24 @@ class RentalsController < ApplicationController
   end
 
   def overdue
-    @rentals = Rental.all.where(checkin_date: nil).where("due_date < ?", Date.current)
+    sort_options = ["movie_id", "title", "customer_id", "name", "postal_code", "checkout_date", "due_date"]
+
+    @rentals = Rental.all.where(checkin_date: nil).where("due_date > ?", Date.current)
+
+    @details = []
+    @rentals.each do |rental|
+      @details << {
+        "movie_id" => rental.movie_id,
+        "title" => rental.movie.title,
+        "customer_id" => rental.customer_id,
+        "name" => rental.customer.name,
+        "postal_code" => rental.customer.postal_code,
+        "checkout_date" => rental.checkout_date,
+        "due_date" =>  rental.due_date
+      }
+    end
+    @details = sort_and_paginate(sort_options, @details, params)
+
   end
 
   private
