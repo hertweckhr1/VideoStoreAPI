@@ -2,7 +2,7 @@
 
 rentalone:
   checkout_date: 2018-11-04
-  due_date: 2018-11-10
+  due_date: "<%= Date.tomorrow %>"
   movie: movieone
   customer: customerone
   checkin_date: nil
